@@ -111,6 +111,48 @@ cp -r ~/code/knowledge-center/project-init .
 
 But remember: the installed `keithstart` command always uses the version in the main repo.
 
+## Using keithstart with Conductor
+
+### Creating Projects with GitHub Remote
+
+When creating projects in Conductor, you need a GitHub repository with an `origin` remote set up from the start. Use the `--remote` flag to automatically create both:
+
+```bash
+# Create a new project with GitHub repository
+keithstart my-project --remote
+
+# With specific project type
+keithstart my-api --type=node --remote
+
+# With Conductor workspace
+keithstart ml-project --type=python --conductor --remote
+```
+
+**What happens:**
+1. ✅ Creates GitHub repository (private by default)
+2. ✅ Creates local project directory
+3. ✅ Initializes git with `origin` remote configured
+4. ✅ Copies all template files
+5. ✅ Installs dependencies
+6. ✅ Creates initial commit
+7. ✅ Pushes to GitHub
+
+This ensures the `origin` remote exists from the start, which Conductor requires for syncing changes.
+
+### Without --remote Flag
+
+If you create a project without `--remote`:
+```bash
+keithstart my-project
+```
+
+You'll need to manually create and add the GitHub repository:
+```bash
+cd ~/code/my-project
+gh repo create my-project --private --source=. --remote=origin
+git push -u origin main
+```
+
 ## Uninstalling
 
 To remove keithstart:
