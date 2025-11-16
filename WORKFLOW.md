@@ -16,15 +16,31 @@ You are working in the **Error Ingestion Workflow** for the knowledge center. Yo
 
 ### Directory Access
 
-**Workspace Location**: `/Users/keitharmstrong/code/knowledge-center/.conductor/medan`
+**Workspace Location**: `${CONDUCTOR_ROOT_PATH}/.conductor/${CONDUCTOR_WORKSPACE_NAME}`
 
 **IMPORTANT**: All work should take place within this workspace directory. Do NOT read or write files outside this workspace.
 
-### Navigation Instructions
+### Path Resolution
 
-1. **Primary workspace**: You are already in `/Users/keitharmstrong/code/knowledge-center/.conductor/medan`
-2. **Main knowledge center**: The parent repository is at `/Users/keitharmstrong/code/knowledge-center` (read-only reference)
-3. **Conductor tools**: Available at `/Users/keitharmstrong/code/knowledge-center/conductor/conductor.py`
+The workflow uses Conductor's environment variables for portability:
+
+1. **Determine workspace path**:
+   ```bash
+   # Primary method (in Conductor):
+   WORKSPACE="${CONDUCTOR_ROOT_PATH}/.conductor/${CONDUCTOR_WORKSPACE_NAME}"
+
+   # Fallback (if environment variables not set):
+   # Look for .conductor/medan in current directory or parent directories
+   ```
+
+2. **Key paths**:
+   - **Workspace**: `${CONDUCTOR_ROOT_PATH}/.conductor/${CONDUCTOR_WORKSPACE_NAME}` (typically `.conductor/medan`)
+   - **Repository root**: `${CONDUCTOR_ROOT_PATH}` (read-only reference)
+   - **Conductor tools**: `${CONDUCTOR_ROOT_PATH}/conductor/conductor.py`
+   - **Notes directory**: `${WORKSPACE}/notes/`
+   - **Templates directory**: `${WORKSPACE}/templates/`
+
+3. **Working from any directory**: This workflow will work regardless of your current directory because it uses absolute paths constructed from environment variables.
 
 ### Available Directories
 
@@ -135,10 +151,12 @@ Before creating a new note, search existing notes to see if this error has been 
 You can use the Python conductor agent to help merge and organize notes:
 
 ```bash
-python /Users/keitharmstrong/code/knowledge-center/conductor/conductor.py \
-  --kb-path /Users/keitharmstrong/code/knowledge-center/.conductor/medan \
+python ${CONDUCTOR_ROOT_PATH}/conductor/conductor.py \
+  --kb-path ${CONDUCTOR_ROOT_PATH}/.conductor/${CONDUCTOR_WORKSPACE_NAME} \
   --input notes/your-new-error.md
 ```
+
+**Note**: The conductor agent will automatically resolve paths, so you can use relative paths for the `--input` parameter as long as you're in the workspace directory.
 
 ---
 
