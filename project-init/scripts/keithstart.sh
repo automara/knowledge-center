@@ -6,8 +6,8 @@ set -e  # Exit on error
 
 # Configuration
 KNOWLEDGE_CENTER="$HOME/code/knowledge-center"
-MANDATORY_DIR="$KNOWLEDGE_CENTER/.conductor/tianjin/project-init/mandatory"
-OPTIONAL_DIR="$KNOWLEDGE_CENTER/.conductor/tianjin/project-init/optional"
+MANDATORY_DIR="$KNOWLEDGE_CENTER/.conductor/riyadh/project-init/mandatory"
+OPTIONAL_DIR="$KNOWLEDGE_CENTER/.conductor/riyadh/project-init/optional"
 PROJECT_ROOT="$HOME/code"
 
 # Default values
@@ -218,8 +218,8 @@ if [ "$USE_CONDUCTOR" = true ]; then
     mkdir -p .conductor/$PROJECT_NAME
 
     # Copy templates if they exist in knowledge center
-    if [ -d "$KNOWLEDGE_CENTER/.conductor/tianjin/templates" ]; then
-        cp -r "$KNOWLEDGE_CENTER/.conductor/tianjin/templates" ".conductor/$PROJECT_NAME/"
+    if [ -d "$KNOWLEDGE_CENTER/.conductor/riyadh/templates" ]; then
+        cp -r "$KNOWLEDGE_CENTER/.conductor/riyadh/templates" ".conductor/$PROJECT_NAME/"
     fi
 
     # Copy environment to workspace
@@ -253,7 +253,7 @@ Created: $CURRENT_DATE
 Co-Authored-By: keithstart <noreply@keithstart.local>"
 
 # 13. Track initialization in knowledge center
-echo "$PROJECT_NAME|$PROJECT_TYPE|$CURRENT_DATE|$PROJECT_PATH" >> "$KNOWLEDGE_CENTER/.conductor/tianjin/project-init/.projects-log"
+echo "$PROJECT_NAME|$PROJECT_TYPE|$CURRENT_DATE|$PROJECT_PATH" >> "$KNOWLEDGE_CENTER/.conductor/riyadh/project-init/.projects-log"
 
 # 14. Success message
 echo ""
@@ -280,4 +280,7 @@ elif [ "$PROJECT_TYPE" = "go" ]; then
 fi
 
 echo "  # Start coding!"
+echo ""
+echo -e "${BLUE}💡 Tip: Run this command to navigate to your project:${NC}"
+echo -e "   ${GREEN}cd $PROJECT_PATH${NC}"
 echo ""
