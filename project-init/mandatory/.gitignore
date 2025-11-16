@@ -1,12 +1,18 @@
-# Environment files
+# Environment files (NEVER commit with secrets!)
 .env
 .env.local
 .env.*.local
-
-# Environment templates (customize per project)
 .env.development
-.env.staging
-.env.production
+
+# Environment templates for Railway
+# These can be committed as templates (no real secrets)
+# Update Railway UI with real values
+!.env.staging
+!.env.production
+
+# But ignore if they contain actual secrets
+.env.staging.secret
+.env.production.secret
 .env.test
 
 # Environment backups

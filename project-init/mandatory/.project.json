@@ -32,5 +32,29 @@
   "development": {
     "conductor": false,
     "environmentFile": ".env"
+  },
+  "deployment": {
+    "provider": "railway",
+    "environments": {
+      "development": {
+        "url": "http://localhost:${PORT:-3000}",
+        "branch": "current",
+        "envFile": ".env"
+      },
+      "staging": {
+        "url": "https://[project-name]-staging.up.railway.app",
+        "branch": "staging",
+        "envFile": ".env.staging"
+      },
+      "production": {
+        "url": "https://[project-name].up.railway.app",
+        "branch": "main",
+        "envFile": ".env.production"
+      }
+    },
+    "railway": {
+      "serviceId": "",
+      "projectId": ""
+    }
   }
 }

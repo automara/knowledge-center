@@ -111,7 +111,10 @@ cp -r "$MANDATORY_DIR/.gitignore" "$PROJECT_PATH/" 2>/dev/null || true
 cp -r "$MANDATORY_DIR/.claude" "$PROJECT_PATH/" 2>/dev/null || true
 cp -r "$MANDATORY_DIR/.github" "$PROJECT_PATH/" 2>/dev/null || true
 cp -r "$MANDATORY_DIR/.env.example" "$PROJECT_PATH/" 2>/dev/null || true
+cp -r "$MANDATORY_DIR/.env.staging" "$PROJECT_PATH/" 2>/dev/null || true
+cp -r "$MANDATORY_DIR/.env.production" "$PROJECT_PATH/" 2>/dev/null || true
 cp -r "$MANDATORY_DIR/.project.json" "$PROJECT_PATH/" 2>/dev/null || true
+cp -r "$MANDATORY_DIR/railway.json" "$PROJECT_PATH/" 2>/dev/null || true
 cp -r "$MANDATORY_DIR/README.md" "$PROJECT_PATH/" 2>/dev/null || true
 cp -r "$MANDATORY_DIR/docs" "$PROJECT_PATH/" 2>/dev/null || true
 
@@ -280,6 +283,12 @@ elif [ "$PROJECT_TYPE" = "go" ]; then
 fi
 
 echo "  # Start coding!"
+echo ""
+echo -e "${BLUE}📦 Deployment Setup:${NC}"
+echo "  Railway configuration added (railway.json)"
+echo "  Environment templates created (.env.staging, .env.production)"
+echo "  Run 'railway init' to connect to Railway"
+echo "  See docs/DEPLOYMENT.md for deployment workflow"
 echo ""
 echo -e "${BLUE}💡 Tip: Run this command to navigate to your project:${NC}"
 echo -e "   ${GREEN}cd $PROJECT_PATH${NC}"
