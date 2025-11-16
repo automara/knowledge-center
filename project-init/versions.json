@@ -1,0 +1,74 @@
+{
+  "version": "1.0.0",
+  "last_updated": "2025-11-16",
+  "description": "Template version tracking for keithstart system",
+  "templates": {
+    "mandatory": {
+      ".gitignore": {
+        "version": "1.0.0",
+        "last_updated": "2025-11-16",
+        "description": "Standard ignore patterns for all project types"
+      },
+      ".claude/CLAUDE.md": {
+        "version": "1.0.0",
+        "last_updated": "2025-11-16",
+        "description": "Claude Code project instructions template"
+      },
+      "README.md": {
+        "version": "1.0.0",
+        "last_updated": "2025-11-16",
+        "description": "Project README template"
+      },
+      ".env.example": {
+        "version": "1.0.0",
+        "last_updated": "2025-11-16",
+        "description": "Environment variables template"
+      },
+      "docs/README.md": {
+        "version": "1.0.0",
+        "last_updated": "2025-11-16",
+        "description": "Documentation folder structure"
+      },
+      ".github/PULL_REQUEST_TEMPLATE.md": {
+        "version": "1.0.0",
+        "last_updated": "2025-11-16",
+        "description": "Pull request template following workflow guidelines"
+      },
+      ".github/ISSUE_TEMPLATE.md": {
+        "version": "1.0.0",
+        "last_updated": "2025-11-16",
+        "description": "GitHub issue template with by-claude tag support"
+      }
+    },
+    "optional": {
+      "node": {
+        "version": "1.0.0",
+        "last_updated": "2025-11-16",
+        "files": ["package.json", "tsconfig.json", ".eslintrc.js", "src/index.js"]
+      },
+      "python": {
+        "version": "1.0.0",
+        "last_updated": "2025-11-16",
+        "files": ["requirements.txt", "pyproject.toml", "main.py"]
+      },
+      "go": {
+        "version": "1.0.0",
+        "last_updated": "2025-11-16",
+        "files": ["go.mod.template", "main.go"]
+      }
+    }
+  },
+  "changelog": [
+    {
+      "version": "1.0.0",
+      "date": "2025-11-16",
+      "changes": [
+        "Initial release of keithstart system",
+        "Added mandatory templates for all projects",
+        "Added optional templates for node, python, and go",
+        "Created keithstart.sh initialization script",
+        "Created keithsync.sh template sync script"
+      ]
+    }
+  ]
+}

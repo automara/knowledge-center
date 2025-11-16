@@ -4,12 +4,58 @@ Master index and navigation guide for the knowledge center.
 
 ## Quick Navigation
 
+- [Project Initialization](#project-initialization) - keithstart system for new projects
 - [Templates](#templates) - Reusable document templates
 - [Workflows](#workflows) - Claude Code workflows and practices
 - [Guides](#guides) - Comprehensive guides
 - [Snippets](#snippets) - Code examples and patterns
 - [Notes](#notes) - Raw notes and observations
 - [Archive](#archive) - Processed and organized content
+
+---
+
+## Project Initialization
+
+**keithstart** - Automated project initialization system for creating new projects with standardized configurations.
+
+### Quick Start
+```bash
+# Install globally
+cd ~/code/knowledge-center/.conductor/tianjin/project-init/scripts
+./install.sh
+
+# Create a new project
+keithstart my-project                    # Node.js (default)
+keithstart ml-model --type=python        # Python project
+keithstart api-service --type=go         # Go project
+```
+
+### Features
+- **Mandatory templates** - Every project gets .gitignore, .claude/CLAUDE.md, README, .env.example, GitHub templates
+- **Type-specific templates** - Node.js, Python, or Go configurations
+- **Auto-customization** - Replaces placeholders with project name and date
+- **Dependency installation** - Automatically installs npm/pip/go packages
+- **Git integration** - Initializes repository and creates initial commit
+- **GitHub integration** - Optional automatic repository creation with `--remote`
+- **Template syncing** - Update existing projects with `keithsync`
+
+### Documentation
+- **[project-init/README.md](project-init/README.md)** - Complete system documentation
+- **[versions.json](project-init/versions.json)** - Template version tracking
+- **[.projects-log](project-init/.projects-log)** - Log of initialized projects
+
+### Available Commands
+- `keithstart project-name [--type=node|python|go] [--conductor] [--remote]` - Initialize new project
+- `keithsync [--dry-run] [--template=name] [--force]` - Sync templates to existing project
+
+### File Structure
+```
+project-init/
+├── mandatory/      # Templates for all projects
+├── optional/       # Type-specific templates (node, python, go)
+├── scripts/        # keithstart.sh, keithsync.sh, install.sh
+└── versions.json   # Version tracking
+```
 
 ---
 
@@ -211,7 +257,10 @@ Processed, organized notes that have been refined and are ready for reference.
 Content from this knowledge center can be reused in your projects:
 
 ```bash
-# Copy a template
+# Initialize a new project with keithstart (recommended)
+keithstart my-project --type=node
+
+# Or manually copy templates
 cp knowledge-center/templates/claude-md.md my-project/
 
 # Reference a guide
@@ -219,6 +268,10 @@ cat knowledge-center/guides/[guide-name].md
 
 # Use a code snippet
 cat knowledge-center/snippets/[snippet-name].[ext]
+
+# Sync existing project with latest templates
+cd my-project
+keithsync
 ```
 
 ---
