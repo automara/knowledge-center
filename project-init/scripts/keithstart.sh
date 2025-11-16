@@ -6,8 +6,8 @@ set -e  # Exit on error
 
 # Configuration
 KNOWLEDGE_CENTER="$HOME/code/knowledge-center"
-MANDATORY_DIR="$KNOWLEDGE_CENTER/.conductor/riyadh/project-init/mandatory"
-OPTIONAL_DIR="$KNOWLEDGE_CENTER/.conductor/riyadh/project-init/optional"
+MANDATORY_DIR="$KNOWLEDGE_CENTER/project-init/mandatory"
+OPTIONAL_DIR="$KNOWLEDGE_CENTER/project-init/optional"
 PROJECT_ROOT="$HOME/code"
 
 # Default values
@@ -21,6 +21,28 @@ GREEN='\033[0;32m'
 BLUE='\033[0;34m'
 YELLOW='\033[1;33m'
 NC='\033[0m' # No Color
+
+# Helper function for yes/no prompts
+prompt_yes_no() {
+    local prompt="$1"
+    local default="${2:-n}"
+    local answer
+
+    if [ "$default" = "y" ]; then
+        prompt="$prompt [Y/n]: "
+    else
+        prompt="$prompt [y/N]: "
+    fi
+
+    read -p "$prompt" answer
+    answer=${answer:-$default}
+
+    if [[ "$answer" =~ ^[Yy] ]]; then
+        return 0
+    else
+        return 1
+    fi
+}
 
 # Parse arguments
 if [ $# -eq 0 ]; then
@@ -221,8 +243,8 @@ if [ "$USE_CONDUCTOR" = true ]; then
     mkdir -p .conductor/$PROJECT_NAME
 
     # Copy templates if they exist in knowledge center
-    if [ -d "$KNOWLEDGE_CENTER/.conductor/riyadh/templates" ]; then
-        cp -r "$KNOWLEDGE_CENTER/.conductor/riyadh/templates" ".conductor/$PROJECT_NAME/"
+    if [ -d "$KNOWLEDGE_CENTER/templates" ]; then
+        cp -r "$KNOWLEDGE_CENTER/templates" ".conductor/$PROJECT_NAME/"
     fi
 
     # Copy environment to workspace
@@ -251,7 +273,7 @@ echo "MCPs extend Claude Code with tools for your tech stack."
 echo ""
 
 if prompt_yes_no "Would you like to install MCPs for Claude Code?" "y"; then
-    MCP_INSTALLER="$KNOWLEDGE_CENTER/.conductor/tianjin-v1/install-mcps.sh"
+    MCP_INSTALLER="$KNOWLEDGE_CENTER/scripts/install-mcps.sh"
 
     if [ -f "$MCP_INSTALLER" ]; then
         echo ""
@@ -268,7 +290,7 @@ if prompt_yes_no "Would you like to install MCPs for Claude Code?" "y"; then
     fi
 else
     echo -e "${YELLOW}Skipping MCP installation. You can install them later by running:${NC}"
-    echo "   bash $KNOWLEDGE_CENTER/.conductor/tianjin-v1/install-mcps.sh"
+    echo "   bash $KNOWLEDGE_CENTER/scripts/install-mcps.sh"
 fi
 
 # 14. Initial commit
@@ -284,7 +306,7 @@ Created: $CURRENT_DATE
 Co-Authored-By: keithstart <noreply@keithstart.local>"
 
 # 15. Track initialization in knowledge center
-echo "$PROJECT_NAME|$PROJECT_TYPE|$CURRENT_DATE|$PROJECT_PATH" >> "$KNOWLEDGE_CENTER/.conductor/riyadh/project-init/.projects-log"
+echo "$PROJECT_NAME|$PROJECT_TYPE|$CURRENT_DATE|$PROJECT_PATH" >> "$KNOWLEDGE_CENTER/project-init/.projects-log"
 
 # 16. Success message
 echo ""
