@@ -281,3 +281,6 @@ fi
 
 echo "  # Start coding!"
 echo ""
+echo -e "${BLUE}💡 Tip: Run this command to navigate to your project:${NC}"
+echo -e "   ${GREEN}cd $PROJECT_PATH${NC}"
+echo ""
