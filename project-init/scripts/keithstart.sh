@@ -113,15 +113,38 @@ echo "   Type: $PROJECT_TYPE"
 echo "   Location: $PROJECT_PATH"
 echo ""
 
-# 1. Create project directory
+# 1. Optional: Create GitHub repository FIRST (before local setup)
+if [ "$CREATE_REMOTE" = true ]; then
+    if command -v gh >/dev/null 2>&1; then
+        echo -e "${GREEN}🌐 Creating GitHub repository...${NC}"
+        # Create the repo on GitHub first
+        gh repo create "$PROJECT_NAME" --private --clone=false
+        echo -e "${GREEN}✓ GitHub repository created${NC}"
+    else
+        echo -e "${YELLOW}⚠️  gh CLI not found, skipping GitHub repository creation${NC}"
+        echo -e "${YELLOW}⚠️  Project will be created locally only${NC}"
+        CREATE_REMOTE=false
+    fi
+fi
+
+# 2. Create project directory
 echo -e "${GREEN}📁 Creating project directory...${NC}"
 mkdir -p "$PROJECT_PATH"
 cd "$PROJECT_PATH"
 
-# 2. Initialize git repository
+# 3. Initialize git repository and set up remote
 echo -e "${GREEN}📦 Initializing git repository...${NC}"
 git init
 git checkout -b main
+
+# If we created a GitHub repo, set it as the origin remote
+if [ "$CREATE_REMOTE" = true ]; then
+    echo -e "${GREEN}🔗 Setting up remote origin...${NC}"
+    # Get the authenticated user's GitHub username
+    GH_USER=$(gh api user -q .login)
+    git remote add origin "https://github.com/$GH_USER/$PROJECT_NAME.git"
+    echo -e "${GREEN}✓ Remote origin configured${NC}"
+fi
 
 # 3. Copy mandatory files
 echo -e "${GREEN}📋 Copying mandatory files...${NC}"
@@ -254,20 +277,10 @@ if [ "$USE_CONDUCTOR" = true ]; then
     fi
 fi
 
-# 10. Optional: Create GitHub repository
-if [ "$CREATE_REMOTE" = true ]; then
-    if command -v gh >/dev/null 2>&1; then
-        echo -e "${GREEN}🌐 Creating GitHub repository...${NC}"
-        gh repo create "$PROJECT_NAME" --private --source=. --remote=origin
-    else
-        echo -e "${YELLOW}⚠️  gh CLI not found, skipping GitHub repository creation${NC}"
-    fi
-fi
-
-# 11. Create version tracking file
+# 10. Create version tracking file
 echo "$CURRENT_DATE" > .keithstart-version
 
-# 12. Optional: Install MCPs
+# 11. Optional: Install MCPs
 echo ""
 echo -e "${BLUE}🔌 MCP (Model Context Protocol) Setup${NC}"
 echo "MCPs extend Claude Code with tools for your tech stack."
@@ -294,7 +307,7 @@ else
     echo "   bash $KNOWLEDGE_CENTER/scripts/install-mcps.sh"
 fi
 
-# 14. Initial commit
+# 12. Initial commit
 echo ""
 echo -e "${GREEN}💾 Creating initial commit...${NC}"
 git add .
@@ -306,10 +319,18 @@ Created: $CURRENT_DATE
 
 Co-Authored-By: keithstart <noreply@keithstart.local>"
 
-# 15. Track initialization in knowledge center
+# 13. Push to GitHub if remote was created
+if [ "$CREATE_REMOTE" = true ]; then
+    echo ""
+    echo -e "${GREEN}⬆️  Pushing initial commit to GitHub...${NC}"
+    git push -u origin main
+    echo -e "${GREEN}✓ Pushed to GitHub${NC}"
+fi
+
+# 14. Track initialization in knowledge center
 echo "$PROJECT_NAME|$PROJECT_TYPE|$CURRENT_DATE|$PROJECT_PATH" >> "$KNOWLEDGE_CENTER/project-init/.projects-log"
 
-# 16. Success message
+# 15. Success message
 echo ""
 echo -e "${GREEN}✅ Project initialized successfully!${NC}"
 echo ""
