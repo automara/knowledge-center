@@ -1,0 +1,7 @@
+{
+  "scripts": {
+    "setup": "echo 'Setting up Error Ingestion Workflow for Knowledge Center' && echo 'Workspace: $CONDUCTOR_WORKSPACE_NAME' && echo 'Root path: $CONDUCTOR_ROOT_PATH' && echo 'Knowledge center path: /Users/keitharmstrong/code/knowledge-center/.conductor/medan' && cd /Users/keitharmstrong/code/knowledge-center/.conductor/medan && pwd",
+    "run": "cd /Users/keitharmstrong/code/knowledge-center/.conductor/medan && echo 'Ready to ingest errors into knowledge center at:' && pwd && echo 'Use the conductor Python agent or follow WORKFLOW.md for instructions'"
+  },
+  "runScriptMode": "nonconcurrent"
+}
