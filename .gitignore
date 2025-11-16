@@ -3,6 +3,16 @@
 .env.local
 .env.*.local
 
+# Environment templates (contain no real secrets, but keep private)
+# These live at repo root and are copied to workspaces
+.env.development
+.env.staging
+.env.production
+.env.test
+
+# Environment backups from sync script
+.env.backup.*
+
 # IDE and editor
 .vscode/
 .idea/
