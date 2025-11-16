@@ -4,6 +4,7 @@ Master index and navigation guide for the knowledge center.
 
 ## Quick Navigation
 
+- [Memory System](#memory-system) - Project context, decisions, and restart capability
 - [Project Initialization](#project-initialization) - keithstart system for new projects
 - [Templates](#templates) - Reusable document templates
 - [Workflows](#workflows) - Claude Code workflows and practices
@@ -11,6 +12,111 @@ Master index and navigation guide for the knowledge center.
 - [Snippets](#snippets) - Code examples and patterns
 - [Notes](#notes) - Raw notes and observations
 - [Archive](#archive) - Processed and organized content
+
+---
+
+## Memory System
+
+**Purpose:** Enable complete project reconstruction and knowledge retention across restarts, new workspaces, and Claude Code instances.
+
+### Core Files
+- **[MEMORY.md](MEMORY.md)** - Strategic decisions, patterns, issues, and lessons
+- **[CHANGELOG.md](CHANGELOG.md)** - Chronological development history
+- **[MEMORY_SYSTEM_GUIDE.md](MEMORY_SYSTEM_GUIDE.md)** - Complete usage guide
+
+### Quick Start
+```bash
+# Starting a new workspace? Read these first:
+1. MEMORY.md - Complete project context
+2. CHANGELOG.md - Recent development history
+3. MEMORY_SYSTEM_GUIDE.md - How to use the system
+
+# During development:
+- Create notes in /notes with YAML frontmatter
+- Update CHANGELOG.md after each session
+- Update MEMORY.md after significant decisions
+
+# Before context reset:
+- Document current session in CHANGELOG.md
+- Commit and push all changes
+```
+
+### What's Tracked
+
+**MEMORY.md Contains:**
+- Project genesis and vision
+- Key architectural decisions with rationale
+- Successful patterns and best practices
+- Issues encountered and their resolutions
+- Architecture evolution timeline
+- Critical dependencies
+- Lessons learned
+- Quick restart guide for complete reconstruction
+
+**CHANGELOG.md Contains:**
+- Date-ordered change entries
+- Branch and commit information
+- Type and scope of each change
+- Impact assessment
+- Related issues and PRs
+- Detailed development log
+- Project statistics
+
+**MEMORY_SYSTEM_GUIDE.md Contains:**
+- Daily usage instructions
+- Update procedures and templates
+- Project restart scenarios
+- Best practices
+- Troubleshooting guide
+- Integration with git workflow
+
+### Key Features
+- **Complete Restart Capability** - Rebuild project from scratch using memory files
+- **Decision History** - Never forget why decisions were made
+- **Pattern Recognition** - Document what works across iterations
+- **Continuous Improvement** - Learn from mistakes and successes
+- **Seamless Handoff** - Onboard new developers or AI instances
+
+### When to Use
+
+**Read MEMORY.md When:**
+- Starting work on the project
+- Before making major decisions
+- Encountering similar problems
+- During project restart
+- Training new team members
+
+**Update MEMORY.md When:**
+- Making significant architectural decisions
+- Discovering successful patterns
+- Resolving notable issues
+- Learning valuable lessons
+- After major milestones
+
+**Read CHANGELOG.md When:**
+- Understanding recent changes
+- Tracking project timeline
+- Finding related commits
+- After long breaks
+- During code reviews
+
+**Update CHANGELOG.md When:**
+- After each development session
+- After context resets
+- When completing features
+- After fixing bugs
+- During milestones
+
+### Project Restart Scenarios
+
+The memory system handles these restart scenarios:
+
+1. **New Workspace in Conductor** - Fresh workspace with repo access
+2. **Complete Reconstruction** - Lost everything except MEMORY.md and CHANGELOG.md
+3. **New Developer Onboarding** - Someone new joining the project
+4. **After Long Break** - Returning after weeks or months away
+
+See MEMORY_SYSTEM_GUIDE.md for detailed instructions on each scenario.
 
 ---
 
