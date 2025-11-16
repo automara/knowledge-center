@@ -1,4 +1,4 @@
-module github.com/yourusername/[project-name]
+module github.com/keitharm/[project-name]
 
 go 1.21
 

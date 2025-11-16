@@ -111,6 +111,7 @@ cp -r "$MANDATORY_DIR/.gitignore" "$PROJECT_PATH/" 2>/dev/null || true
 cp -r "$MANDATORY_DIR/.claude" "$PROJECT_PATH/" 2>/dev/null || true
 cp -r "$MANDATORY_DIR/.github" "$PROJECT_PATH/" 2>/dev/null || true
 cp -r "$MANDATORY_DIR/.env.example" "$PROJECT_PATH/" 2>/dev/null || true
+cp -r "$MANDATORY_DIR/.project.json" "$PROJECT_PATH/" 2>/dev/null || true
 cp -r "$MANDATORY_DIR/README.md" "$PROJECT_PATH/" 2>/dev/null || true
 cp -r "$MANDATORY_DIR/docs" "$PROJECT_PATH/" 2>/dev/null || true
 
@@ -141,27 +142,53 @@ echo -e "${GREEN}✏️  Customizing templates...${NC}"
 CURRENT_DATE=$(date +%Y-%m-%d)
 
 # Replace placeholders in all markdown and config files
+# Handle different sed variants (GNU sed vs BSD sed on macOS)
 if command -v gsed >/dev/null 2>&1; then
+    # GNU sed available (installed via homebrew)
     SED_CMD="gsed"
+    SED_INPLACE="-i"
 else
+    # BSD sed (macOS default) - requires empty string for in-place editing
     SED_CMD="sed"
+    SED_INPLACE="-i ''"
 fi
 
 # Use find with null separator for safety
 find "$PROJECT_PATH" -type f \( -name "*.md" -o -name "*.json" -o -name "*.toml" -o -name "*.js" -o -name "*.py" -o -name "*.go" \) -print0 | while IFS= read -r -d '' file; do
-    $SED_CMD -i "s/\[Project Name\]/$PROJECT_NAME/g" "$file"
-    $SED_CMD -i "s/\[project-name\]/$PROJECT_NAME/g" "$file"
-    $SED_CMD -i "s/YYYY-MM-DD/$CURRENT_DATE/g" "$file"
+    $SED_CMD $SED_INPLACE "s/\[Project Name\]/$PROJECT_NAME/g" "$file"
+    $SED_CMD $SED_INPLACE "s/\[project-name\]/$PROJECT_NAME/g" "$file"
+    $SED_CMD $SED_INPLACE "s/YYYY-MM-DD/$CURRENT_DATE/g" "$file"
 done
 
-# 6. Set up environment file
+# 6. Customize .project.json with type-specific values
+if [ -f ".project.json" ]; then
+    echo -e "${GREEN}📝 Customizing project metadata...${NC}"
+    # Update project type
+    $SED_CMD $SED_INPLACE "s/\"type\": \"node\"/\"type\": \"$PROJECT_TYPE\"/g" .project.json
+
+    # Update conductor flag
+    if [ "$USE_CONDUCTOR" = true ]; then
+        $SED_CMD $SED_INPLACE "s/\"conductor\": false/\"conductor\": true/g" .project.json
+    fi
+
+    # Update package manager based on type
+    if [ "$PROJECT_TYPE" = "python" ]; then
+        $SED_CMD $SED_INPLACE "s/\"packageManager\": \"npm\"/\"packageManager\": \"pip\"/g" .project.json
+        $SED_CMD $SED_INPLACE "s/\"lockfile\": \"package-lock.json\"/\"lockfile\": \"requirements.txt\"/g" .project.json
+    elif [ "$PROJECT_TYPE" = "go" ]; then
+        $SED_CMD $SED_INPLACE "s/\"packageManager\": \"npm\"/\"packageManager\": \"go\"/g" .project.json
+        $SED_CMD $SED_INPLACE "s/\"lockfile\": \"package-lock.json\"/\"lockfile\": \"go.sum\"/g" .project.json
+    fi
+fi
+
+# 7. Set up environment file
 if [ -f ".env.example" ]; then
     echo -e "${GREEN}⚙️  Creating .env file...${NC}"
     cp .env.example .env
-    $SED_CMD -i "s/\[project-name\]/$PROJECT_NAME/g" .env
+    $SED_CMD $SED_INPLACE "s/\[project-name\]/$PROJECT_NAME/g" .env
 fi
 
-# 7. Install dependencies
+# 8. Install dependencies
 echo -e "${GREEN}📥 Installing dependencies...${NC}"
 if [ "$PROJECT_TYPE" = "node" ]; then
     if command -v npm >/dev/null 2>&1; then
@@ -185,7 +212,7 @@ elif [ "$PROJECT_TYPE" = "go" ]; then
     fi
 fi
 
-# 8. Optional: Create Conductor workspace
+# 9. Optional: Create Conductor workspace
 if [ "$USE_CONDUCTOR" = true ]; then
     echo -e "${GREEN}🎯 Creating Conductor workspace...${NC}"
     mkdir -p .conductor/$PROJECT_NAME
@@ -201,7 +228,7 @@ if [ "$USE_CONDUCTOR" = true ]; then
     fi
 fi
 
-# 9. Optional: Create GitHub repository
+# 10. Optional: Create GitHub repository
 if [ "$CREATE_REMOTE" = true ]; then
     if command -v gh >/dev/null 2>&1; then
         echo -e "${GREEN}🌐 Creating GitHub repository...${NC}"
@@ -211,10 +238,10 @@ if [ "$CREATE_REMOTE" = true ]; then
     fi
 fi
 
-# 10. Create version tracking file
+# 11. Create version tracking file
 echo "$CURRENT_DATE" > .keithstart-version
 
-# 11. Initial commit
+# 12. Initial commit
 echo -e "${GREEN}💾 Creating initial commit...${NC}"
 git add .
 git commit -m "chore: initialize project with keithstart
@@ -225,10 +252,10 @@ Created: $CURRENT_DATE
 
 Co-Authored-By: keithstart <noreply@keithstart.local>"
 
-# 12. Track initialization in knowledge center
+# 13. Track initialization in knowledge center
 echo "$PROJECT_NAME|$PROJECT_TYPE|$CURRENT_DATE|$PROJECT_PATH" >> "$KNOWLEDGE_CENTER/.conductor/tianjin/project-init/.projects-log"
 
-# 13. Success message
+# 14. Success message
 echo ""
 echo -e "${GREEN}✅ Project initialized successfully!${NC}"
 echo ""

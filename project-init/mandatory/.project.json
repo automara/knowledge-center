@@ -1,0 +1,36 @@
+{
+  "name": "[project-name]",
+  "version": "0.1.0",
+  "type": "node",
+  "created": "YYYY-MM-DD",
+  "generator": {
+    "tool": "keithstart",
+    "version": "1.0.0"
+  },
+  "metadata": {
+    "description": "Brief description of what this project does",
+    "tags": [],
+    "repository": {
+      "type": "git",
+      "url": "https://github.com/keitharm/[project-name]"
+    },
+    "author": {
+      "name": "Keith Armstrong",
+      "github": "keitharm"
+    }
+  },
+  "structure": {
+    "src": "Source code directory",
+    "tests": "Test files directory",
+    "docs": "Documentation directory",
+    "scripts": "Build and utility scripts"
+  },
+  "dependencies": {
+    "packageManager": "npm",
+    "lockfile": "package-lock.json"
+  },
+  "development": {
+    "conductor": false,
+    "environmentFile": ".env"
+  }
+}
