@@ -1,0 +1,7 @@
+{
+  "scripts": {
+    "setup": "echo 'Setting up Error Ingestion Workflow for Knowledge Center' && echo 'Workspace: $CONDUCTOR_WORKSPACE_NAME' && echo 'Root path: $CONDUCTOR_ROOT_PATH' && WORKSPACE_PATH=\"${CONDUCTOR_ROOT_PATH}/.conductor/${CONDUCTOR_WORKSPACE_NAME}\" && echo \"Knowledge center path: $WORKSPACE_PATH\" && cd \"$WORKSPACE_PATH\" && pwd && echo 'Workspace ready for error ingestion'",
+    "run": "WORKSPACE_PATH=\"${CONDUCTOR_ROOT_PATH}/.conductor/${CONDUCTOR_WORKSPACE_NAME}\" && cd \"$WORKSPACE_PATH\" && echo 'Ready to ingest errors into knowledge center at:' && pwd && echo 'Available commands:' && echo '  - Use /error to submit errors' && echo '  - Check WORKFLOW.md for detailed instructions' && echo '  - Templates available in templates/' && ls -1 templates/"
+  },
+  "runScriptMode": "nonconcurrent"
+}
