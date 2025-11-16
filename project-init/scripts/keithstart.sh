@@ -179,7 +179,8 @@ else
 fi
 
 # Use find with null separator for safety
-find "$PROJECT_PATH" -type f \( -name "*.md" -o -name "*.json" -o -name "*.toml" -o -name "*.js" -o -name "*.py" -o -name "*.go" \) -print0 | while IFS= read -r -d '' file; do
+# Exclude .sh files to prevent corruption of shell scripts (e.g., install-mcps.sh with @ symbols in npm packages)
+find "$PROJECT_PATH" -type f \( -name "*.md" -o -name "*.json" -o -name "*.toml" -o -name "*.js" -o -name "*.py" -o -name "*.go" \) ! -name "*.sh" -print0 | while IFS= read -r -d '' file; do
     $SED_CMD $SED_INPLACE "s/\[Project Name\]/$PROJECT_NAME/g" "$file"
     $SED_CMD $SED_INPLACE "s/\[project-name\]/$PROJECT_NAME/g" "$file"
     $SED_CMD $SED_INPLACE "s/YYYY-MM-DD/$CURRENT_DATE/g" "$file"

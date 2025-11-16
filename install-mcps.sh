@@ -167,19 +167,19 @@ for mcp in "${SELECTED_MCPS[@]}"; do
     case $mcp in
         filesystem)
             echo -e "${YELLOW}Installing Filesystem MCP...${NC}"
-            npm install -g @modelcontextprotocol/server-filesystem
+            npm install -g '@modelcontextprotocol/server-filesystem'
             ;;
         git)
             echo -e "${YELLOW}Installing Git MCP...${NC}"
-            npm install -g @modelcontextprotocol/server-git
+            npm install -g '@modelcontextprotocol/server-git'
             ;;
         github)
             echo -e "${YELLOW}Installing GitHub MCP...${NC}"
-            npm install -g @modelcontextprotocol/server-github
+            npm install -g '@modelcontextprotocol/server-github'
             ;;
         memory)
             echo -e "${YELLOW}Installing Memory MCP...${NC}"
-            npm install -g @modelcontextprotocol/server-memory
+            npm install -g '@modelcontextprotocol/server-memory'
             ;;
         supabase)
             echo -e "${YELLOW}Installing Supabase MCP...${NC}"
@@ -195,35 +195,35 @@ for mcp in "${SELECTED_MCPS[@]}"; do
             ;;
         figma)
             echo -e "${YELLOW}Installing Figma MCP...${NC}"
-            npm install -g @figma/dev-mode-mcp
+            npm install -g '@figma/dev-mode-mcp'
             ;;
         playwright)
             echo -e "${YELLOW}Installing Playwright MCP...${NC}"
-            npm install -g @playwright/mcp
+            npm install -g '@playwright/mcp'
             ;;
         context7)
             echo -e "${YELLOW}Installing Context7 MCP...${NC}"
-            npm install -g @upstash/context7-mcp
+            npm install -g '@upstash/context7-mcp'
             ;;
         eslint)
             echo -e "${YELLOW}Installing ESLint MCP...${NC}"
-            npm install -g @eslint/mcp
+            npm install -g '@eslint/mcp@latest'
             ;;
         prisma)
             echo -e "${YELLOW}Installing Prisma MCP...${NC}"
-            npm install -g prisma
+            npm install -g 'prisma'
             ;;
         nextjs)
             echo -e "${YELLOW}Installing Next.js DevTools MCP...${NC}"
-            npm install -g next-devtools-mcp
+            npm install -g 'next-devtools-mcp'
             ;;
         sequential-thinking)
             echo -e "${YELLOW}Installing Sequential Thinking MCP...${NC}"
-            npm install -g @modelcontextprotocol/server-sequential-thinking
+            npm install -g '@modelcontextprotocol/server-sequential-thinking'
             ;;
         fetch)
             echo -e "${YELLOW}Installing Fetch MCP...${NC}"
-            npm install -g @modelcontextprotocol/server-fetch
+            npm install -g '@modelcontextprotocol/server-fetch'
             ;;
     esac
 done
