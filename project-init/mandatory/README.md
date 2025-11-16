@@ -81,5 +81,5 @@ See [CLAUDE.md](./.claude/CLAUDE.md) for detailed workflow.
 
 ---
 
-Generated with [keithstart](https://github.com/yourusername/knowledge-center)
+Generated with [keithstart](https://github.com/keitharm/knowledge-center)
 Created: YYYY-MM-DD

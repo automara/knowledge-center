@@ -43,6 +43,7 @@ keithstart full-stack-app --type=node --remote
 Every project gets:
 - `.gitignore` - Comprehensive ignore patterns for all project types
 - `.claude/CLAUDE.md` - Claude Code project instructions
+- `.project.json` - Project metadata and configuration (new!)
 - `README.md` - Project documentation template
 - `.env.example` - Environment variables template
 - `docs/README.md` - Documentation folder structure
@@ -73,6 +74,54 @@ Templates automatically replace placeholders:
 - `[Project Name]` → Actual project name
 - `[project-name]` → Actual project name (lowercase/hyphenated)
 - `YYYY-MM-DD` → Current date
+
+### Project Metadata (.project.json)
+
+Each project includes a `.project.json` file with structured metadata:
+
+```json
+{
+  "name": "project-name",
+  "version": "0.1.0",
+  "type": "node|python|go",
+  "created": "2025-11-16",
+  "generator": {
+    "tool": "keithstart",
+    "version": "1.0.0"
+  },
+  "metadata": {
+    "description": "Brief description",
+    "tags": [],
+    "repository": {
+      "type": "git",
+      "url": "https://github.com/keitharm/project-name"
+    },
+    "author": {
+      "name": "Keith Armstrong",
+      "github": "keitharm"
+    }
+  },
+  "dependencies": {
+    "packageManager": "npm|pip|go",
+    "lockfile": "package-lock.json|requirements.txt|go.sum"
+  },
+  "development": {
+    "conductor": true|false,
+    "environmentFile": ".env"
+  }
+}
+```
+
+This file is automatically customized based on:
+- Project type (`--type`)
+- Conductor flag (`--conductor`)
+- Package manager for the selected type
+
+You can use this file for:
+- Project discovery and indexing
+- Automated tooling and scripts
+- Documentation generation
+- IDE integrations
 
 ## Commands
 
@@ -350,7 +399,7 @@ For issues or questions:
 
 ## Credits
 
-Generated with [keithstart](https://github.com/yourusername/knowledge-center)
+Generated with [keithstart](https://github.com/keitharm/knowledge-center)
 Part of the knowledge center system for standardized project initialization.
 
 ---
