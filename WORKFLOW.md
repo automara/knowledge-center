@@ -54,14 +54,40 @@ The workflow uses Conductor's environment variables for portability:
 
 When you receive an error to ingest, follow these steps:
 
+### 0. Auto-Detect Project Context (Optional but Recommended)
+
+Before gathering information, check for a `.conductor-context.md` file in the user's current working directory or project root:
+
+```bash
+# Check current directory
+if [ -f ".conductor-context.md" ]; then
+  # Parse YAML frontmatter to extract:
+  # - project_name
+  # - repository
+  # - language
+  # - framework
+  # - default_environment
+  # - common_categories (for tags)
+fi
+```
+
+**If found**: Auto-populate these fields and only ask the user for:
+- Error message/stack trace
+- What triggered it
+- Environment (if different from default)
+
+**If not found**: Ask for all information (fallback to manual entry)
+
+**Template location**: `${CONDUCTOR_ROOT_PATH}/.conductor/${CONDUCTOR_WORKSPACE_NAME}/templates/project-context.md`
+
 ### 1. Analyze the Error
 
-- **Extract key information**:
-  - Error message and stack trace
-  - Project/repository context
-  - Programming language and framework
-  - Date/time of occurrence
-  - Environment (dev, staging, production)
+- **Extract key information** (auto-populated from `.conductor-context.md` if available):
+  - Error message and stack trace (always required from user)
+  - Project/repository context (from context file or ask user)
+  - Programming language and framework (from context file or ask user)
+  - Date/time of occurrence (auto: current date/time)
+  - Environment (from context file's `default_environment` or ask user)
 
 ### 2. Create Documentation
 

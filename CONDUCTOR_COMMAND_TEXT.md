@@ -21,22 +21,33 @@ You are following the **Error Ingestion Workflow** to document errors from proje
 
 When the user provides an error, you should:
 
-1. **Gather Information** - Ask for:
-   - Error message (exact text)
-   - Stack trace (if available)
-   - Project/repository name
-   - Programming language and framework
-   - Environment (dev/staging/production)
-   - When it occurred
-   - What triggered it
+1. **Auto-Detect Project Context** (if available)
+   - Check if `.conductor-context.md` exists in the current directory
+   - If found, parse the YAML frontmatter to extract:
+     - `project_name` - Use for file naming and context
+     - `repository` - Include in error documentation
+     - `language` - Add as tag
+     - `framework` - Add as tag and context
+     - `default_environment` - Use if user doesn't specify
+     - `common_categories` - Add as suggested tags
+   - If not found, proceed with manual information gathering
 
-2. **Navigate to Workspace**
+2. **Gather Information** - Ask for (skip fields auto-detected from context file):
+   - Error message (exact text) - ALWAYS REQUIRED
+   - Stack trace (if available) - ALWAYS REQUIRED
+   - Project/repository name - AUTO-DETECTED or ask
+   - Programming language and framework - AUTO-DETECTED or ask
+   - Environment (dev/staging/production) - AUTO-DETECTED from default_environment or ask
+   - When it occurred - AUTO: use current date/time
+   - What triggered it - ALWAYS REQUIRED
+
+3. **Navigate to Workspace**
    - Determine workspace path: `${CONDUCTOR_ROOT_PATH}/.conductor/${CONDUCTOR_WORKSPACE_NAME}`
    - Create files in: `${CONDUCTOR_ROOT_PATH}/.conductor/${CONDUCTOR_WORKSPACE_NAME}/notes/YYYY-MM-DD-project-error-topic.md`
    - Use template from: `${CONDUCTOR_ROOT_PATH}/.conductor/${CONDUCTOR_WORKSPACE_NAME}/templates/error-template.md`
    - **Note**: These paths work from any directory because they use Conductor's environment variables
 
-3. **Create Error Documentation** with this structure:
+4. **Create Error Documentation** with this structure:
 
 ```yaml
 ---
@@ -81,26 +92,27 @@ severity: low|medium|high|critical
 #error #[project] #[type] #[language]
 ```
 
-4. **File Naming**: `notes/YYYY-MM-DD-project-error-topic.md`
+5. **File Naming**: `notes/YYYY-MM-DD-project-error-topic.md`
+   - Use auto-detected `project_name` if available
    Examples:
    - `notes/2025-11-16-api-postgresql-connection-timeout.md`
    - `notes/2025-11-16-frontend-react-state-update.md`
 
-5. **Severity Levels**:
+6. **Severity Levels**:
    - **critical**: System down, data loss, security breach
    - **high**: Major functionality broken, many users affected
    - **medium**: Feature broken, some users affected
    - **low**: Minor issue, edge case
 
-6. **Standard Tags**:
+7. **Standard Tags**:
    - Type: `#error`, `#bug`, `#warning`, `#exception`
    - Severity: `#critical`, `#high-priority`, `#medium-priority`, `#low-priority`
-   - Category: `#database`, `#api`, `#auth`, `#frontend`, `#backend`
-   - Language: `#python`, `#javascript`, `#typescript`, `#go`, `#rust`
+   - Category: `#database`, `#api`, `#auth`, `#frontend`, `#backend` (use `common_categories` from context if available)
+   - Language: `#python`, `#javascript`, `#typescript`, `#go`, `#rust` (use auto-detected `language` if available)
 
-7. **Check for Duplicates** - Search existing notes before creating new ones
+8. **Check for Duplicates** - Search existing notes before creating new ones
 
-8. **Confirm Completion** - Show:
+9. **Confirm Completion** - Show:
    - ✅ Error documented
    - 📁 File location
    - 🏷️ Tags applied
