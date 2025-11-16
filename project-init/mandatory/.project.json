@@ -31,7 +31,8 @@
   },
   "development": {
     "conductor": false,
-    "environmentFile": ".env"
+    "environmentFile": ".env",
+    "mcps": false
   },
   "deployment": {
     "provider": "railway",
@@ -55,6 +56,22 @@
     "railway": {
       "serviceId": "",
       "projectId": ""
+    }
+  },
+  "tools": {
+    "stack": [
+      "supabase",
+      "shadcn-ui",
+      "tailwind",
+      "railway",
+      "github",
+      "claude-code",
+      "figma"
+    ],
+    "mcps": {
+      "installed": false,
+      "location": "~/.claude/mcp.json",
+      "documentation": ".conductor/docs/mcp-guide.md"
     }
   }
 }

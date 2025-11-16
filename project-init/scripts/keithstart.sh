@@ -244,7 +244,35 @@ fi
 # 11. Create version tracking file
 echo "$CURRENT_DATE" > .keithstart-version
 
-# 12. Initial commit
+# 12. Optional: Install MCPs
+echo ""
+echo -e "${BLUE}🔌 MCP (Model Context Protocol) Setup${NC}"
+echo "MCPs extend Claude Code with tools for your tech stack."
+echo ""
+
+if prompt_yes_no "Would you like to install MCPs for Claude Code?" "y"; then
+    MCP_INSTALLER="$KNOWLEDGE_CENTER/.conductor/tianjin-v1/install-mcps.sh"
+
+    if [ -f "$MCP_INSTALLER" ]; then
+        echo ""
+        echo -e "${GREEN}Launching MCP installer...${NC}"
+        bash "$MCP_INSTALLER"
+
+        # Track MCP installation in project metadata
+        if [ -f ".project.json" ]; then
+            $SED_CMD $SED_INPLACE "s/\"mcps\": false/\"mcps\": true/g" .project.json
+        fi
+    else
+        echo -e "${YELLOW}⚠️  MCP installer not found at $MCP_INSTALLER${NC}"
+        echo "   You can install MCPs manually later."
+    fi
+else
+    echo -e "${YELLOW}Skipping MCP installation. You can install them later by running:${NC}"
+    echo "   bash $KNOWLEDGE_CENTER/.conductor/tianjin-v1/install-mcps.sh"
+fi
+
+# 14. Initial commit
+echo ""
 echo -e "${GREEN}💾 Creating initial commit...${NC}"
 git add .
 git commit -m "chore: initialize project with keithstart
@@ -255,22 +283,29 @@ Created: $CURRENT_DATE
 
 Co-Authored-By: keithstart <noreply@keithstart.local>"
 
-# 13. Track initialization in knowledge center
+# 15. Track initialization in knowledge center
 echo "$PROJECT_NAME|$PROJECT_TYPE|$CURRENT_DATE|$PROJECT_PATH" >> "$KNOWLEDGE_CENTER/.conductor/riyadh/project-init/.projects-log"
 
-# 14. Success message
+# 16. Success message
 echo ""
 echo -e "${GREEN}✅ Project initialized successfully!${NC}"
 echo ""
 echo -e "${BLUE}📁 Location:${NC} $PROJECT_PATH"
 echo -e "${BLUE}🏷️  Type:${NC} $PROJECT_TYPE"
 echo -e "${BLUE}🎨 Templates:${NC} Applied"
+if [ -f "$HOME/.claude/mcp.json" ]; then
+    echo -e "${BLUE}🔌 MCPs:${NC} Configured globally"
+fi
 echo ""
 echo -e "${YELLOW}Next steps:${NC}"
 echo "  cd $PROJECT_PATH"
 
 if [ -f ".env" ]; then
     echo "  # Edit .env with your configuration"
+fi
+
+if [ -f "$HOME/.claude/.env.example" ]; then
+    echo "  # Configure MCP credentials: ~/.claude/.env.example"
 fi
 
 if [ "$PROJECT_TYPE" = "node" ]; then
@@ -292,4 +327,8 @@ echo "  See docs/DEPLOYMENT.md for deployment workflow"
 echo ""
 echo -e "${BLUE}💡 Tip: Run this command to navigate to your project:${NC}"
 echo -e "   ${GREEN}cd $PROJECT_PATH${NC}"
+echo ""
+echo -e "${BLUE}📚 Documentation:${NC}"
+echo "   MCP Guide: .conductor/docs/mcp-guide.md (if available)"
+echo "   Project Docs: docs/"
 echo ""
