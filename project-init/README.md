@@ -43,10 +43,13 @@ keithstart full-stack-app --type=node --remote
 Every project gets:
 - `.gitignore` - Comprehensive ignore patterns for all project types
 - `.claude/CLAUDE.md` - Claude Code project instructions
-- `.project.json` - Project metadata and configuration (new!)
+- `.project.json` - Project metadata and configuration
 - `README.md` - Project documentation template
 - `.env.example` - Environment variables template
+- `MEMORY.md` - Project memory system for decisions, patterns, and lessons (new!)
+- `CHANGELOG.md` - Development history and change tracking (new!)
 - `docs/README.md` - Documentation folder structure
+- `docs/MEMORY_SYSTEM.md` - Memory system usage guide (new!)
 - `.github/PULL_REQUEST_TEMPLATE.md` - PR template following workflow
 - `.github/ISSUE_TEMPLATE.md` - Issue template with by-claude tag
 
@@ -122,6 +125,61 @@ You can use this file for:
 - Automated tooling and scripts
 - Documentation generation
 - IDE integrations
+
+### Memory System
+
+Every project includes a comprehensive memory system for knowledge retention:
+
+**MEMORY.md** - Strategic knowledge base containing:
+- Project genesis and vision
+- Key architectural decisions with rationale
+- Successful patterns and best practices
+- Issue resolutions with root causes
+- Architecture evolution timeline
+- Lessons learned
+- Quick restart guide for complete project reconstruction
+
+**CHANGELOG.md** - Chronological development history containing:
+- Date-ordered change entries with branch/commit info
+- Type, scope, and impact of each change
+- Rationale for changes
+- Related issues and PRs
+- Detailed development log
+- Project statistics
+
+**docs/MEMORY_SYSTEM.md** - Complete usage guide with:
+- Daily workflow integration
+- Update templates for decisions, patterns, issues
+- Project restart scenarios
+- Best practices and troubleshooting
+- Git workflow integration
+
+**Benefits:**
+- Complete project restart capability from memory files alone
+- Decision rationale preserved for future reference
+- Pattern library building automatically over time
+- Context retention across workspace changes and context resets
+- Seamless onboarding for new team members
+- Continuous improvement through lessons learned
+
+**Usage:**
+```bash
+# Morning: Read recent changes
+tail -50 CHANGELOG.md
+
+# During work: Document as you go
+# Reference MEMORY.md for patterns
+
+# Evening: Update with today's work
+# Add entries to CHANGELOG.md
+# Update MEMORY.md if significant decisions made
+
+# Commit and push
+git add MEMORY.md CHANGELOG.md
+git commit -m "docs: update memory system"
+```
+
+See `docs/MEMORY_SYSTEM.md` in any keithstart project for complete usage guide.
 
 ## Commands
 
